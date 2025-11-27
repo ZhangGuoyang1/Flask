@@ -1,13 +1,28 @@
 {% extends "layout.html" %}
 {% block title %}Wikipedia Results{% endblock %}
-{% block content %}
-{% if page %}
-{#    TODO: add page title and more... #}
 
-  <h2>Summary </h2>
+{% block content %}
+
+{% if error %}
+    <h2>Error</h2>
+    <p style="color:red;">{{ error }}</p>
+
+{% elif options %}
+    <h2>Disambiguation</h2>
+    <p>The term you searched is ambiguous. Did you mean:</p>
+    <ul>
+    {% for item in options %}
+        <li>{{ item }}</li>
+    {% endfor %}
+    </ul>
+
+{% elif page %}
+    <h2>{{ page.title }}</h2>
     <p>{{ page.summary }}</p>
-    <p><a href="{{ page.url }}"> {{ page.title }}</a> </p>
+    <p><a href="{{ page.url }}" target="_blank">Read more on Wikipedia</a></p>
+
 {% else %}
-  <h1>Error</h1>
+    <p>No search yet. Go to the search page.</p>
 {% endif %}
+
 {% endblock %}
